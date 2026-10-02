@@ -67,3 +67,7 @@ body {
 .rise { animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 input[type="range"].lab-range { accent-color: var(--color-sage); }
 @media (prefers-reduced-motion: reduce) { .rise { animation: none; } }
+
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.route-draw { stroke-dasharray: 700; stroke-dashoffset: 700; animation: draw 2.4s ease-out 0.4s forwards; }
+@media (prefers-reduced-motion: reduce) { .route-draw { animation: none; stroke-dashoffset: 0; } }

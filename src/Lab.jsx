@@ -29,35 +29,103 @@ const Range = ({ label, value, min, max, step = 1, set, fmt = (v) => v }) => (
   </label>
 )
 
-function RouteMap() {
+// Schematic street map: blocks sit between streets, route follows the street grid.
+const PX = 42, PY = 36
+const PARK = [2, 1]
+const BLOCKS = []
+for (let i = 0; i < 8; i++) {
+  for (let j = 0; j < 7; j++) {
+    if (i === PARK[0] && j === PARK[1]) continue
+    BLOCKS.push({ x: i * PX + 3, y: j * PY + 3, k: (i * 7 + j * 13 + i * j) % 4 })
+  }
+}
+const BLOCK_FILL = ['rgb(255 255 255 / .055)', 'rgb(255 255 255 / .035)', 'rgb(217 196 160 / .06)', 'rgb(255 255 255 / .02)']
+const DAYS = [
+  {
+    name: 'Day 1', title: 'Temples and shrines', quiet: 'Early start at lesser-known shrines',
+    walk: 35, km: 2.6, route: 'M42 180 V108 H168 V36 H252',
+    stops: [{ x: 42, y: 180, label: 'Shrine' }, { x: 168, y: 108, label: 'Temple' }, { x: 252, y: 36, label: 'Garden' }],
+  },
+  {
+    name: 'Day 2', title: 'Local food tour', quiet: 'Market stalls over the main street',
+    walk: 25, km: 1.9, route: 'M84 36 H168 V144 H294',
+    stops: [{ x: 84, y: 36, label: 'Market' }, { x: 168, y: 144, label: 'Noodle bar' }, { x: 294, y: 144, label: 'Tea house', above: true }],
+  },
+  {
+    name: 'Day 3', title: 'Culture and shopping', quiet: 'Craft workshops and side streets',
+    walk: 30, km: 2.2, route: 'M42 36 V72 H126 V180 H252',
+    stops: [{ x: 42, y: 36, label: 'Museum' }, { x: 126, y: 72, label: 'Craft street' }, { x: 252, y: 180, label: 'Old town' }],
+  },
+]
+const TOTAL_WALK = DAYS.reduce((n, d) => n + d.walk, 0)
+
+function DayMap({ day, quiet }) {
+  const d = DAYS[day]
   return (
-    <Frag title="Route">
-      <svg viewBox="0 0 240 110" className="w-full" role="img" aria-label="Simple route between three places" fill="none">
-        <g stroke="#A5A7BD" strokeOpacity=".15"><path d="M0 28H240M0 62H240M0 92H240M50 0V110M120 0V110M190 0V110" /></g>
-        <path d="M30 88 C 70 88, 80 50, 120 52 S 175 30, 205 24" stroke="#8DB9A8" strokeWidth="2" strokeLinecap="round" strokeDasharray="3 6" />
-        {[[30, 88], [120, 52], [205, 24]].map(([x, y], i) => <circle key={i} cx={x} cy={y} r="5" fill={i === 2 ? '#D9C4A0' : '#8DB9A8'} />)}
-      </svg>
-      <p className="mt-3 text-xs text-muted">Three stops, roughly 12 minutes between each.</p>
+    <Frag title={`${d.name} route`}>
+      <div className="relative overflow-hidden rounded-xl border border-fg/10 bg-[#0d1124]">
+        <svg viewBox="0 0 320 220" className="block w-full" role="img" aria-label={`Schematic map of ${d.name}: ${d.stops.map((st) => st.label).join(', ')}`} fill="none">
+          {BLOCKS.map((b, i) => <rect key={i} x={b.x} y={b.y} width="36" height="30" rx="3" fill={BLOCK_FILL[b.k]} />)}
+          <path d="M0 108H320M168 0V220" stroke="rgb(255 255 255 / .09)" strokeWidth="9" />
+          <rect x={PARK[0] * PX + 3} y={PARK[1] * PY + 3} width="36" height="30" rx="6" fill="rgb(141 185 168 / .16)" />
+          <circle cx={PARK[0] * PX + 21} cy={PARK[1] * PY + 18} r="3" fill="rgb(141 185 168 / .35)" />
+          <path d="M205 0 C192 70, 236 130, 214 220" stroke="rgb(110 160 190 / .28)" strokeWidth="16" strokeLinecap="round" />
+          <path d="M205 0 C192 70, 236 130, 214 220" stroke="rgb(110 160 190 / .18)" strokeWidth="1" strokeDasharray="2 6" />
+          <text x="209" y="48" fontSize="8" fill="#A5A7BD" fillOpacity=".55" letterSpacing="1.5" transform="rotate(84 209 48)">RIVER</text>
+          <g key={day}>
+            <path d={d.route} stroke="#090B18" strokeWidth="7" strokeLinejoin="round" strokeLinecap="round" opacity=".6" />
+            <path d={d.route} stroke="#8DB9A8" strokeWidth="6" strokeLinejoin="round" strokeLinecap="round" opacity=".25" className="route-draw" style={{ filter: 'blur(3px)' }} />
+            <path d={d.route} stroke="#8DB9A8" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" className="route-draw" />
+            {d.stops.map((st, i) => {
+              const left = st.x > 200
+              const above = st.above || st.y > 190 || st.y < 50
+              return (
+                <g key={st.label}>
+                  <circle cx={st.x} cy={st.y} r="9" fill={i === 2 ? '#D9C4A0' : '#8DB9A8'} fillOpacity=".2" />
+                  <circle cx={st.x} cy={st.y} r="6" fill={i === 2 ? '#D9C4A0' : '#8DB9A8'} />
+                  <text x={st.x} y={st.y + 3} fontSize="8.5" fontWeight="700" textAnchor="middle" fill="#090B18">{i + 1}</text>
+                  <text x={st.x + (left ? -12 : 12)} y={st.y + (above ? -10 : 17)} fontSize="10" fontWeight="500" fill="#F5F5FA" fillOpacity=".92" textAnchor={left ? 'end' : 'start'}>{st.label}</text>
+                </g>
+              )
+            })}
+          </g>
+        </svg>
+        <span className="absolute right-3 top-3 flex h-6 w-6 items-center justify-center rounded-full border border-fg/10 bg-ink/80 text-[10px] text-muted" aria-hidden="true">N</span>
+      </div>
+      <p className="mt-3 text-sm text-fg/90">
+        {d.walk} min on foot · {d.km} km{quiet ? ' · quieter picks' : ''}
+      </p>
+      <p className="mt-1 text-xs text-muted">Illustrative map, not real geography.</p>
     </Frag>
   )
 }
 
-function Itinerary() {
+function KyotoTrip() {
+  const [day, setDay] = useState(0)
   const [quiet, setQuiet] = useState(false)
-  const days = [
-    ['Day 1', 'Temples and shrines', 'Early start at lesser-known shrines'],
-    ['Day 2', 'Local food tour', 'Market stalls over the main street'],
-    ['Day 3', 'Culture and shopping', 'Craft workshops and side streets'],
-  ]
   return (
-    <Frag title="Your itinerary">
-      <ul className="mb-4 space-y-3 text-sm">
-        {days.map(([d, a, b]) => (
-          <li key={d} className="flex gap-3"><span className="w-12 shrink-0 text-muted">{d}</span><span className="text-fg/90">{quiet ? b : a}</span></li>
-        ))}
-      </ul>
-      <Toggle label="Prefer quieter spots" on={quiet} set={setQuiet} />
-    </Frag>
+    <>
+      <Frag title="Your itinerary">
+        <ul className="mb-4 space-y-2 text-sm">
+          {DAYS.map((d, i) => (
+            <li key={d.name}>
+              <button
+                type="button"
+                aria-pressed={day === i}
+                onClick={() => setDay(i)}
+                className={`flex w-full gap-3 rounded-lg border px-3 py-2.5 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage ${day === i ? 'border-sage/60 bg-sage/10 text-fg' : 'border-transparent text-fg/80 hover:border-fg/15'}`}
+              >
+                <span className="w-12 shrink-0 text-muted">{d.name}</span>
+                <span>{quiet ? d.quiet : d.title}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+        <Toggle label="Prefer quieter spots" on={quiet} set={setQuiet} />
+        <p className="mt-4 border-t border-fg/10 pt-3 text-xs text-muted">3 days · about {TOTAL_WALK} min of walking in total</p>
+      </Frag>
+      <DayMap day={day} quiet={quiet} />
+    </>
   )
 }
 
@@ -122,7 +190,7 @@ function Split() {
 }
 
 const SCENARIOS = {
-  'Plan a 3-day trip to Kyoto': [RouteMap, Itinerary],
+  'Plan a 3-day trip to Kyoto': [KyotoTrip],
   'Find a laptop under my budget': [Budget],
   'Split a dinner bill': [Split],
 }
