@@ -2,12 +2,12 @@
 <html><head><meta charset="utf-8">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#090b18;--fg:#f5f5fa;--muted:#a5a7bd;--v:#7778ff;--c:#5acbff}
+:root{--ink:#090b18;--fg:#f5f5fa;--muted:#a5a7bd;--v:#8DB9A8;--c:#D9C4A0}
 *{box-sizing:border-box;margin:0}
 body{width:1280px;height:720px;background:var(--ink);font-family:Inter,sans-serif;color:var(--fg);position:relative;overflow:hidden;-webkit-font-smoothing:antialiased}
 .glow{position:absolute;border-radius:50%;filter:blur(110px)}
-.g1{width:620px;height:620px;right:-60px;top:60px;background:rgb(119 120 255/.28)}
-.g2{width:340px;height:340px;right:120px;bottom:-60px;background:rgb(90 203 255/.14)}
+.g1{width:620px;height:620px;right:-60px;top:60px;background:rgb(141 185 168/.28)}
+.g2{width:340px;height:340px;right:120px;bottom:-60px;background:rgb(217 196 160/.14)}
 .mark{position:absolute;left:72px;top:60px;font-weight:600;font-size:28px;letter-spacing:-.02em}
 .mark b{background:linear-gradient(90deg,var(--v),var(--c));-webkit-background-clip:text;color:transparent}
 .eyebrow{position:absolute;left:72px;top:210px;font-size:15px;letter-spacing:.26em;text-transform:uppercase;color:var(--v)}
@@ -15,42 +15,42 @@ h1{position:absolute;left:72px;top:250px;width:640px;font-weight:600;font-size:7
 h1 span{background:linear-gradient(90deg,var(--v),var(--c));-webkit-background-clip:text;color:transparent}
 .sub{position:absolute;left:72px;bottom:60px;font-size:20px;color:var(--muted);letter-spacing:.01em}
 svg.paths{position:absolute;inset:0}
-.glass{position:absolute;border-radius:20px;background:linear-gradient(145deg,rgb(119 120 255/.2),rgb(90 203 255/.05) 70%);border:1px solid rgb(165 167 189/.22);box-shadow:0 24px 60px -20px rgb(119 120 255/.45),inset 0 1px 0 rgb(255 255 255/.08)}
+.glass{position:absolute;border-radius:20px;background:linear-gradient(145deg,rgb(141 185 168/.2),rgb(217 196 160/.05) 70%);border:1px solid rgb(165 167 189/.22);box-shadow:0 24px 60px -20px rgb(141 185 168/.45),inset 0 1px 0 rgb(255 255 255/.08)}
 .bar{display:block;height:7px;border-radius:4px;background:rgb(245 245 250/.22)}
 </style></head><body>
 <div class="glow g1"></div><div class="glow g2"></div>
 <svg class="paths" viewBox="0 0 1280 720" fill="none">
-<defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#7778FF"/><stop offset="1" stop-color="#5ACBFF"/></linearGradient></defs>
+<defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#8DB9A8"/><stop offset="1" stop-color="#D9C4A0"/></linearGradient></defs>
 <path d="M700 560 C 800 700, 880 420, 960 400 S 1120 430, 1230 190" stroke="url(#g)" stroke-opacity=".6" stroke-width="1.5" stroke-dasharray="4 10"/>
-<path d="M720 330 C 820 280, 880 480, 1010 450 S 1180 300, 1260 380" stroke="#7778FF" stroke-opacity=".4" stroke-width="1.2" stroke-dasharray="4 10"/>
+<path d="M720 330 C 820 280, 880 480, 1010 450 S 1180 300, 1260 380" stroke="#8DB9A8" stroke-opacity=".4" stroke-width="1.2" stroke-dasharray="4 10"/>
 </svg>
 
 <div class="glass" style="left:760px;top:84px;width:360px;height:76px;transform:rotate(-3deg);display:flex;align-items:center;gap:16px;padding:0 20px">
- <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#7778FF" stroke-width="1.5"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>
+ <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#8DB9A8" stroke-width="1.5"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>
  <div style="flex:1;display:flex;flex-direction:column;gap:9px"><i class="bar" style="width:92%"></i><i class="bar" style="width:55%"></i></div>
- <span style="width:34px;height:34px;border-radius:50%;background:rgb(119 120 255/.75);display:flex;align-items:center;justify-content:center;font-size:16px">→</span>
+ <span style="width:34px;height:34px;border-radius:50%;background:rgb(141 185 168/.75);display:flex;align-items:center;justify-content:center;font-size:16px">→</span>
 </div>
 
 <div class="glass" style="left:690px;top:260px;width:250px;height:160px;transform:rotate(2deg);overflow:hidden">
  <svg viewBox="0 0 200 120" width="250" height="160" fill="none"><g stroke="#A5A7BD" stroke-opacity=".18"><path d="M0 30H200M0 70H200M0 100H200M40 0V120M100 0V120M160 0V120"/><path d="M0 110L80 50L200 90"/></g>
- <path d="M30 95 C 60 95, 70 55, 110 55 S 150 40, 160 30" stroke="#5ACBFF" stroke-width="2.2" stroke-linecap="round"/><circle cx="30" cy="95" r="4" fill="#7778FF"/><circle cx="160" cy="30" r="5" fill="#5ACBFF"/><circle cx="160" cy="30" r="10" stroke="#5ACBFF" stroke-opacity=".45"/></svg>
+ <path d="M30 95 C 60 95, 70 55, 110 55 S 150 40, 160 30" stroke="#D9C4A0" stroke-width="2.2" stroke-linecap="round"/><circle cx="30" cy="95" r="4" fill="#8DB9A8"/><circle cx="160" cy="30" r="5" fill="#D9C4A0"/><circle cx="160" cy="30" r="10" stroke="#D9C4A0" stroke-opacity=".45"/></svg>
 </div>
 
 <div class="glass" style="left:960px;top:200px;width:290px;height:250px;transform:rotate(3deg);padding:20px">
- <div style="height:96px;border-radius:12px;background:linear-gradient(135deg,rgb(119 120 255/.55),rgb(119 120 255/.15) 55%,rgb(90 203 255/.35))"></div>
+ <div style="height:96px;border-radius:12px;background:linear-gradient(135deg,rgb(141 185 168/.55),rgb(141 185 168/.15) 55%,rgb(217 196 160/.35))"></div>
  <i class="bar" style="width:45%;margin:20px 0 18px;background:rgb(245 245 250/.38)"></i>
- <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><u style="width:7px;height:7px;border-radius:50%;background:#7778ff"></u><i class="bar" style="width:70%"></i></div>
- <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><u style="width:7px;height:7px;border-radius:50%;background:#5acbff"></u><i class="bar" style="width:55%"></i></div>
- <div style="display:flex;align-items:center;gap:12px"><u style="width:7px;height:7px;border-radius:50%;background:#7778ff"></u><i class="bar" style="width:62%"></i></div>
+ <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><u style="width:7px;height:7px;border-radius:50%;background:#8DB9A8"></u><i class="bar" style="width:70%"></i></div>
+ <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><u style="width:7px;height:7px;border-radius:50%;background:#D9C4A0"></u><i class="bar" style="width:55%"></i></div>
+ <div style="display:flex;align-items:center;gap:12px"><u style="width:7px;height:7px;border-radius:50%;background:#8DB9A8"></u><i class="bar" style="width:62%"></i></div>
 </div>
 
 <div class="glass" style="left:790px;top:500px;width:300px;height:76px;transform:rotate(-2deg);display:flex;align-items:center;gap:16px;padding:0 22px">
- <div style="position:relative;flex:1;height:7px;border-radius:4px;background:rgb(245 245 250/.15)"><i style="position:absolute;left:0;top:0;height:7px;width:60%;border-radius:4px;background:linear-gradient(90deg,#7778ff,#5acbff)"></i><i style="position:absolute;left:60%;top:-5px;width:17px;height:17px;border-radius:50%;background:#090b18;border:1px solid rgb(245 245 250/.4);box-shadow:0 0 16px #7778ff"></i></div>
- <span style="position:relative;width:42px;height:24px;border-radius:12px;background:rgb(119 120 255/.65)"><i style="position:absolute;right:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#f5f5fa"></i></span>
+ <div style="position:relative;flex:1;height:7px;border-radius:4px;background:rgb(245 245 250/.15)"><i style="position:absolute;left:0;top:0;height:7px;width:60%;border-radius:4px;background:linear-gradient(90deg,#8DB9A8,#D9C4A0)"></i><i style="position:absolute;left:60%;top:-5px;width:17px;height:17px;border-radius:50%;background:#090b18;border:1px solid rgb(245 245 250/.4);box-shadow:0 0 16px #8DB9A8"></i></div>
+ <span style="position:relative;width:42px;height:24px;border-radius:12px;background:rgb(141 185 168/.65)"><i style="position:absolute;right:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#f5f5fa"></i></span>
 </div>
 
 <div class="glass" style="left:1110px;top:520px;width:130px;height:56px;border-radius:14px;transform:rotate(4deg);display:flex;align-items:center;gap:10px;padding:0 16px">
- <u style="width:9px;height:9px;border-radius:50%;background:#5acbff"></u><i class="bar" style="flex:1"></i>
+ <u style="width:9px;height:9px;border-radius:50%;background:#D9C4A0"></u><i class="bar" style="flex:1"></i>
 </div>
 
 <div class="mark">noui<b>.si</b></div>
