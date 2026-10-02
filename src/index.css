@@ -71,3 +71,27 @@ input[type="range"].lab-range { accent-color: var(--color-sage); }
 @keyframes draw { to { stroke-dashoffset: 0; } }
 .route-draw { stroke-dasharray: 700; stroke-dashoffset: 700; animation: draw 2.4s ease-out 0.4s forwards; }
 @media (prefers-reduced-motion: reduce) { .route-draw { animation: none; stroke-dashoffset: 0; } }
+
+/* intro: broken interface glitches, collapses, resolves into one prompt */
+@keyframes glitch {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(var(--r)); }
+  50% { transform: translate3d(var(--jx), var(--jy), 0) rotate(calc(var(--r) * -0.6)); }
+}
+@keyframes collapse {
+  from { opacity: 1; transform: rotate(var(--r)) scale(1); filter: blur(0); }
+  to { opacity: 0; transform: rotate(0deg) scale(0.15); filter: blur(8px); }
+}
+@keyframes final-in {
+  from { opacity: 0; transform: translate(-50%, -42%) scale(0.96); filter: blur(6px); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); filter: blur(0); }
+}
+.chaos-frag {
+  transform: rotate(var(--r));
+  animation: glitch 0.45s steps(2) calc(var(--d)) 5,
+             collapse 0.9s cubic-bezier(0.6, 0, 0.2, 1) 2.5s forwards;
+}
+.chaos-final { opacity: 0; animation: final-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 3.1s forwards; }
+@media (prefers-reduced-motion: reduce) {
+  .chaos-frag { display: none; }
+  .chaos-final { opacity: 1; animation: none; transform: translate(-50%, -50%); }
+}

@@ -1,4 +1,5 @@
 import Visual from './Visual.jsx'
+import Chaos from './Chaos.jsx'
 
 const Wordmark = ({ className = '' }) => (
   <span className={`font-semibold tracking-tight lowercase ${className}`}>
@@ -17,7 +18,11 @@ export default function App() {
       </header>
 
       <main id="main">
-        <section className="mx-auto max-w-5xl px-6 pb-8 pt-16 text-center md:pt-28">
+        <section className="px-6 pt-6 md:pt-10" aria-label="Intro animation">
+          <Chaos />
+        </section>
+
+        <section className="mx-auto max-w-5xl px-6 pb-8 pt-10 text-center md:pt-16">
           <p className="mb-6 text-balance text-[11px] uppercase tracking-[0.26em] text-sage sm:text-xs">A different way to think about software</p>
           <h1 className="text-balance text-[2.6rem] font-semibold leading-[1.04] tracking-tight sm:text-6xl md:text-7xl lg:text-[5.5rem]">
             What if software could shape its <span className="bg-gradient-to-r from-sage to-sand bg-clip-text text-transparent">own interface?</span>

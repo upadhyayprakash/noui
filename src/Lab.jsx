@@ -196,8 +196,23 @@ const SCENARIOS = {
 }
 const intents = Object.keys(SCENARIOS)
 
+// An intent typed on the home page arrives via sessionStorage (browser-only, read once).
+const KEYWORDS = [
+  /kyoto|trip|travel|itinerary|japan|visit|holiday|vacation|temple/i,
+  /laptop|computer|buy|budget|price|compare|cheap|battery/i,
+  /split|bill|dinner|restaurant|tip|friends|pay|lunch|check/i,
+]
+const ASKED = (() => {
+  try {
+    const v = sessionStorage.getItem('noui:intent')
+    sessionStorage.removeItem('noui:intent')
+    return v
+  } catch { return null }
+})()
+const ASKED_MATCH = ASKED ? KEYWORDS.findIndex((re) => re.test(ASKED)) : -1
+
 export default function Lab() {
-  const [intent, setIntent] = useState(() => intents[new URLSearchParams(window.location.search).get('intent')] ?? null)
+  const [intent, setIntent] = useState(() => intents[new URLSearchParams(window.location.search).get('intent')] ?? intents[ASKED_MATCH] ?? null)
   const [shown, setShown] = useState(0)
   const timer = useRef()
   const parts = intent ? SCENARIOS[intent] : []
@@ -229,6 +244,15 @@ export default function Lab() {
           <h1 className="text-balance text-4xl font-semibold leading-[1.08] tracking-tight md:text-6xl">Say what you need. <span className="text-sage">Get the interface for it.</span></h1>
           <p className="mx-auto mt-6 max-w-xl text-balance font-light text-muted md:text-lg">Pick an intent. Watch a screen assemble from a small, fixed set of parts.</p>
         </div>
+
+        {ASKED && (
+          <p className="mx-auto mt-8 max-w-xl text-balance text-center text-sm text-muted">
+            You asked: <span className="text-fg">&ldquo;{ASKED}&rdquo;</span>.{' '}
+            {ASKED_MATCH >= 0
+              ? `No AI read that. It only matched your words to the closest of three scripted intents: ${intents[ASKED_MATCH]}.`
+              : 'This simulation only knows three scripted intents and none matched, so pick one below.'}
+          </p>
+        )}
 
         <div className="mt-10 flex flex-wrap justify-center gap-3" role="group" aria-label="Choose an intent">
           {intents.map((t) => (
